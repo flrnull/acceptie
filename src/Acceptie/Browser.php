@@ -16,7 +16,7 @@ class Browser {
      * @param \RemoteWebDriver $driver
      */
     public function __construct(\RemoteWebDriver $driver) {
-        $this->_driver;
+        $this->_driver = $driver;
     }
 
     /**
