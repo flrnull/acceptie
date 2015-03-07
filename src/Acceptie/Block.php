@@ -13,10 +13,17 @@ abstract class Block {
     protected $_browser;
 
     /**
-     * @param Browser $browser
+     * @var string
      */
-    final public function __construct(Browser $browser) {
+    protected $_selector;
+
+    /**
+     * @param Browser $browser
+     * @param string $selector
+     */
+    final public function __construct(Browser $browser, $selector = null) {
         $this->_browser = $browser;
+        $this->_selector = $selector;
         $this->_initBlocks();
     }
 
@@ -26,11 +33,12 @@ abstract class Block {
 
     /**
      * @param string $className
+     * @param string $selector
      * @return self
      * @throws Exception
      */
-    protected function _initBlock($className) {
-        $block = new $className($this->_browser);
+    protected function _initBlock($className, $selector = null) {
+        $block = new $className($this->_browser, $selector);
         if (!($block instanceof self)) {
             throw new Exception("Invalid block {$className}, should be instance of Block");
         }
