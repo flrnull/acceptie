@@ -19,10 +19,30 @@ class Test extends \PHPUnit_Framework_TestCase {
 
     private function _startBrowser() {
         $host = 'http://'.$this->_seleniumHost().':'.$this->_seleniumPort().'/wd/hub';
-        $capabilities = \DesiredCapabilities::firefox();
-        //$capabilities = \DesiredCapabilities::chrome();
-        $driver = \RemoteWebDriver::create($host, $capabilities, 10);
+        $driver = $this->_seleniumDriver();
+        if ($driver === 'firefox') {
+            $capabilities = \DesiredCapabilities::firefox();
+        } elseif($driver === 'chrome') {
+            $capabilities = \DesiredCapabilities::chrome();
+        } else {
+            throw new Exception("Invalid driver name {$driver}");
+        }
+        $driver = \RemoteWebDriver::create($host, $capabilities, $this->_seleniumTimeout());
         return new Browser($driver);
+    }
+
+    /**
+     * @return string
+     */
+    protected function _seleniumDriver() {
+        return 'chrome';
+    }
+
+    /**
+     * @return int
+     */
+    protected function _seleniumTimeout() {
+        return 10000;
     }
 
     /**
@@ -33,9 +53,9 @@ class Test extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @return string
+     * @return int
      */
     protected function _seleniumPort() {
-        return '4444';
+        return 4444;
     }
 }
