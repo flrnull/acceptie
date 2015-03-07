@@ -25,4 +25,11 @@ class Browser {
     public function open($url) {
         $this->_driver->get($url);
     }
+
+    /**
+     * @return string
+     */
+    public function pageTitle() {
+        return $this->_driver->getTitle();
+    }
 }
