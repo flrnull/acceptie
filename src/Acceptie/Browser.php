@@ -80,7 +80,14 @@ class Browser {
 
     /**
      * @param string $selector
-     * @return \RemoteWebElement[]
+     */
+    public function submit($selector) {
+        $this->_getElement($selector)->submit();
+    }
+
+    /**
+     * @param string $selector
+     * @return \RemoteWebElement
      */
     private function _getElement($selector) {
         if ($this->_isXPathSelector($selector)) {
