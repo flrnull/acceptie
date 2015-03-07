@@ -27,6 +27,21 @@ abstract class Block {
         $this->_initBlocks();
     }
 
+    /**
+     * @return string
+     */
+    public function selector() {
+        return $this->_selector;
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function attribute($name) {
+        return $this->_browser->getAttributeValue($name, $this->_selector);
+    }
+
     protected function _initBlocks() {
 
     }

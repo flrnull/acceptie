@@ -86,6 +86,27 @@ class Browser {
     }
 
     /**
+     * @param string $attrName
+     * @param string $selector
+     * @return string
+     */
+    public function getAttributeValue($attrName, $selector) {
+        return $this->_getElement($selector)->getAttribute($attrName);
+    }
+
+    /**
+     * @param string $selector
+     * @return bool
+     */
+    public function isElementExists($selector) {
+        try {
+            return $this->_getElement($selector)->getTagName() !== '';
+        } catch (\InvalidSelectorException $e) {
+            return false;
+        }
+    }
+
+    /**
      * @param string $selector
      * @return \RemoteWebElement
      */

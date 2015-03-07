@@ -28,6 +28,13 @@ abstract class Test extends \PHPUnit_Framework_TestCase {
         $this->_closeDriver();
     }
 
+    /**
+     * @param string $selector
+     */
+    public function assertElementExists($selector) {
+        $this->assertTrue($this->browser->isElementExists($selector), 'assertElementExists');
+    }
+
     private function _initDriver() {
         $host = 'http://'.$this->_seleniumHost().':'.$this->_seleniumPort().'/wd/hub';
         $driverName = $this->_seleniumDriver();
