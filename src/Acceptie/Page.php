@@ -11,10 +11,13 @@ abstract class Page extends Block {
      * @return string
      */
     public function title() {
-        return $this->_browser->pageTitle();
+        return $this->_browser->getPageTitle();
     }
 
+    /**
+     * @return string
+     */
     public function url() {
-        return $this->_browser->pageUrl();
+        return $this->_browser->getPageUrl();
     }
 }
