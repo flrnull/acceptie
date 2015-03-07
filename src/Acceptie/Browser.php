@@ -32,4 +32,11 @@ class Browser {
     public function pageTitle() {
         return $this->_driver->getTitle();
     }
+
+    /**
+     * @return string
+     */
+    public function pageUrl() {
+        return $this->_driver->getCurrentURL();
+    }
 }
