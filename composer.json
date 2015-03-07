@@ -1,0 +1,21 @@
+{
+  "name": "flrnull/Acceptie",
+  "type": "library",
+  "description": "Acceptance tests php framework based on phpunit",
+  "keywords": ["php", "acceptance", "test", "tests", "testing", "codeception", "phpunit", "regression"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "flrnull",
+      "email": "flr.null@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Acceptie\\": "src/"
+    }
+  }
+}
