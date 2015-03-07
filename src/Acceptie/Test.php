@@ -12,23 +12,41 @@ class Test extends \PHPUnit_Framework_TestCase {
      */
     public $browser;
 
+    /**
+     * @var \RemoteWebDriver
+     */
+    private $_driver;
+
     public function setUp() {
         parent::setUp();
-        $this->browser = $this->_startBrowser();
+        $this->_initDriver();
+        $this->_initBrowser();
     }
 
-    private function _startBrowser() {
+    public function tearDown() {
+        parent::tearDown();
+        $this->_closeDriver();
+    }
+
+    private function _initDriver() {
         $host = 'http://'.$this->_seleniumHost().':'.$this->_seleniumPort().'/wd/hub';
-        $driver = $this->_seleniumDriver();
-        if ($driver === 'firefox') {
+        $driverName = $this->_seleniumDriver();
+        if ($driverName === 'firefox') {
             $capabilities = \DesiredCapabilities::firefox();
-        } elseif($driver === 'chrome') {
+        } elseif($driverName === 'chrome') {
             $capabilities = \DesiredCapabilities::chrome();
         } else {
-            throw new Exception("Invalid driver name {$driver}");
+            throw new Exception("Invalid driver name {$driverName}");
         }
-        $driver = \RemoteWebDriver::create($host, $capabilities, $this->_seleniumTimeout());
-        return new Browser($driver);
+        $this->_driver = \RemoteWebDriver::create($host, $capabilities, $this->_seleniumTimeout());
+    }
+
+    private function _closeDriver() {
+        $this->_driver->close();
+    }
+
+    private function _initBrowser() {
+        $this->browser = new Browser($this->_driver);
     }
 
     /**
