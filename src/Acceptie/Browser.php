@@ -41,6 +41,19 @@ class Browser {
     }
 
     /**
+     * @param string $name
+     * @return string
+     */
+    public function getCookie($name) {
+        $result = null;
+        $cookieData = $this->_driver->manage()->getCookieNamed($name);
+        if ($cookieData !== null) {
+            $result = $cookieData['value'];
+        }
+        return $result;
+    }
+
+    /**
      * @param string $selector
      * @param string $text
      */
@@ -129,7 +142,7 @@ class Browser {
      * @param int $timeout
      */
     public function waitForTextPattern($selector, $pattern, $timeout = null) {
-        $this->_wait($timeout)->until(Condition::textToBePresentInElement($this->_getWebDriverBy($selector), $pattern));
+        $this->_wait($timeout)->until(Condition::textPatternToBePresentInElement($this->_getWebDriverBy($selector), $pattern));
     }
 
     /**

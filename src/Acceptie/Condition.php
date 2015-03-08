@@ -20,7 +20,7 @@ class Condition extends \WebDriverExpectedCondition {
             function (\RemoteWebDriver $driver) use ($by, $pattern) {
                 try {
                     $elementText = $driver->findElement($by)->getText();
-                    return boolval(preg_match($pattern, $elementText));
+                    return preg_match($pattern, $elementText) === 1;
                 } catch (\StaleElementReferenceException $e) {
                     return null;
                 }
