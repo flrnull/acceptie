@@ -96,6 +96,14 @@ class Browser {
 
     /**
      * @param string $selector
+     * @return string
+     */
+    public function getText($selector) {
+        return $this->_getElement($selector)->getText();
+    }
+
+    /**
+     * @param string $selector
      * @return bool
      */
     public function isElementExists($selector) {
@@ -108,14 +116,28 @@ class Browser {
 
     /**
      * @param string $selector
+     * @param string $text
+     * @param int $timeout
+     */
+    public function waitForText($selector, $text, $timeout = null) {
+        $this->_wait($timeout)->until(\WebDriverExpectedCondition::textToBePresentInElement($this->_getWebDriverBy($selector), $text));
+    }
+
+    /**
+     * @param string $selector
+     * @param string $pattern
+     * @param int $timeout
+     */
+    public function waitForTextPattern($selector, $pattern, $timeout = null) {
+        $this->_wait($timeout)->until(Condition::textToBePresentInElement($this->_getWebDriverBy($selector), $pattern));
+    }
+
+    /**
+     * @param string $selector
      * @return \RemoteWebElement
      */
     private function _getElement($selector) {
-        if ($this->_isXPathSelector($selector)) {
-            return $this->_driver->findElement(\WebDriverBy::xpath($selector));
-        } else {
-            return $this->_driver->findElement(\WebDriverBy::cssSelector($selector));
-        }
+        return $this->_driver->findElement($this->_getWebDriverBy($selector));
     }
 
     /**
@@ -123,10 +145,18 @@ class Browser {
      * @return \RemoteWebElement[]
      */
     private function _getElements($selector) {
+        return $this->_driver->findElements($this->_getWebDriverBy($selector));
+    }
+
+    /**
+     * @param string $selector
+     * @return \WebDriverBy
+     */
+    private function _getWebDriverBy($selector) {
         if ($this->_isXPathSelector($selector)) {
-            return $this->_driver->findElements(\WebDriverBy::xpath($selector));
+            return \WebDriverBy::xpath($selector);
         } else {
-            return $this->_driver->findElements(\WebDriverBy::cssSelector($selector));
+            return \WebDriverBy::cssSelector($selector);
         }
     }
 
@@ -136,5 +166,16 @@ class Browser {
      */
     private function _isXPathSelector($selector) {
         return strpos($selector, "//") === 0;
+    }
+
+    /**
+     * @param int $timeout
+     * @return \WebDriverWait
+     */
+    private function _wait($timeout = null) {
+        if ($timeout === null) {
+            $timeout = 30;
+        }
+        return $this->_driver->wait($timeout);
     }
 }

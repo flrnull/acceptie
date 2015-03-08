@@ -42,6 +42,29 @@ abstract class Block {
         return $this->_browser->getAttributeValue($name, $this->_selector);
     }
 
+    /**
+     * @param string $text
+     * @param int $timeout
+     */
+    public function waitForText($text, $timeout = null) {
+        $this->_browser->waitForText($this->_selector, $text, $timeout);
+    }
+
+    /**
+     * @param string $pattern
+     * @param int $timeout
+     */
+    public function waitForTextPattern($pattern, $timeout = null) {
+        $this->_browser->waitForTextPattern($this->_selector, $pattern, $timeout);
+    }
+
+    /**
+     * @return string
+     */
+    public function text() {
+        return $this->_browser->getText($this->_selector);
+    }
+
     protected function _initBlocks() {
 
     }
