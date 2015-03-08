@@ -48,7 +48,7 @@ class Browser {
         $result = null;
         $cookieData = $this->_driver->manage()->getCookieNamed($name);
         if ($cookieData !== null) {
-            $result = $cookieData['value'];
+            $result = urldecode($cookieData['value']);
         }
         return $result;
     }
