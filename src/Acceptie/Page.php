@@ -20,4 +20,19 @@ abstract class Page extends Block {
     public function url() {
         return $this->_browser->getPageUrl();
     }
+
+    /**
+     * @return string
+     */
+    public function sourceCode() {
+        return $this->_browser->getPageSourceCode();
+    }
+
+    /**
+     * @param string $filePath
+     * @return string binary png file
+     */
+    public function captureScreen($filePath = null) {
+        return $this->_browser->capturePageScreen($filePath);
+    }
 }

@@ -41,6 +41,21 @@ class Browser {
     }
 
     /**
+     * @return string
+     */
+    public function getPageSourceCode() {
+        return $this->_driver->getPageSource();
+    }
+
+    /**
+     * @param string $filePath
+     * @return string binary png file
+     */
+    public function capturePageScreen($filePath = null) {
+        return $this->_driver->takeScreenshot($filePath);
+    }
+
+    /**
      * @param string $name
      * @return string
      */
@@ -143,6 +158,15 @@ class Browser {
      */
     public function waitForTextPattern($selector, $pattern, $timeout = null) {
         $this->_wait($timeout)->until(Condition::textPatternToBePresentInElement($this->_getWebDriverBy($selector), $pattern));
+    }
+
+    /**
+     * @param string $script
+     * @param array $arguments
+     * @return mixed
+     */
+    public function execJavaScript($script, array $arguments = []) {
+        return $this->_driver->executeScript($script, $arguments);
     }
 
     /**
