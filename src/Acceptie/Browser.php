@@ -162,11 +162,10 @@ class Browser {
 
     /**
      * @param string $script
-     * @param array $arguments
      * @return mixed
      */
-    public function execJavaScript($script, array $arguments = []) {
-        return $this->_driver->executeScript($script, $arguments);
+    public function execJavaScript($script) {
+        return $this->_driver->executeScript($script);
     }
 
     /**
