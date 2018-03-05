@@ -114,6 +114,13 @@ class Browser {
     }
 
     /**
+     * @return \WebDriverNavigation
+     */
+    public function reload() {
+        return $this->_driver->navigate()->refresh();
+    }
+
+    /**
      * @param string $attrName
      * @param string $selector
      * @return string
@@ -149,6 +156,14 @@ class Browser {
      */
     public function waitForText($selector, $text, $timeout = null) {
         $this->_wait($timeout)->until(\WebDriverExpectedCondition::textToBePresentInElement($this->_getWebDriverBy($selector), $text));
+    }
+
+    /**
+     * @param string $selector
+     * @param int $timeout
+     */
+    public function waitForElementAppearance($selector, $timeout = null) {
+        $this->_wait($timeout)->until(\WebDriverExpectedCondition::visibilityOfElementLocated($this->_getWebDriverBy($selector)));
     }
 
     /**
